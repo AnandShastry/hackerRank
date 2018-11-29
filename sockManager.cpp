@@ -1,83 +1,38 @@
-#include <bits/stdc++.h>
+#include<vector>
+#include<iostream>
+#include<algorithm>
+#include<iterator>
+#include<unordered_map>
 
 using namespace std;
 
-vector<string> split_string(string);
+int findPairs(vector<int> ar)
+{
+    auto mod=0,pair=0;
+    vector<int> vint;
+    copy(ar.begin(),ar.end(),back_inserter(vint)); // copy from one vector to another
+    sort(vint.begin(),vint.end()); // sort vector
+    for(auto i:vint)
+        cout<<i<<"\t"; // print sorted array
+    cout<<"\n";
 
-// Complete the sockMerchant function below.
-int sockMerchant(int n, vector<int> ar) {
-    auto pair=0;
-        vector<int> vint;
-    copy(ar.begin(),ar.end(),back_inserter(vint));
     unordered_map<int, size_t> count;  
     for (int i=0; i<vint.size(); i++)        
         count[vint[i]]++;
 
-    for (auto &e:count)            
+    for (auto &mp:count)               
     {
-        pair+=e.second/2;
+        cout << mp.first <<" : "<<mp.second<< "-> "<<mp.second/2<<endl;
+        pair+=mp.second/2;
     }
-    
-    return pair;
-
-
-}
-
-int main()
-{
-    ofstream fout(getenv("OUTPUT_PATH"));
-
-    int n;
-    cin >> n;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-    string ar_temp_temp;
-    getline(cin, ar_temp_temp);
-
-    vector<string> ar_temp = split_string(ar_temp_temp);
-
-    vector<int> ar(n);
-
-    for (int i = 0; i < n; i++) {
-        int ar_item = stoi(ar_temp[i]);
-
-        ar[i] = ar_item;
-    }
-
-    int result = sockMerchant(n, ar);
-
-    fout << result << "\n";
-
-    fout.close();
-
+    cout<<"Pair"<<pair<<endl;
     return 0;
 }
 
-vector<string> split_string(string input_string) {
-    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
-        return x == y and x == ' ';
-    });
+int main(int argc, char const *argv[])
+{
+    vector<int> vi{10,20,20,10,10,30,50,10,20};
+    findPairs(vi);
 
-    input_string.erase(new_end, input_string.end());
-
-    while (input_string[input_string.length() - 1] == ' ') {
-        input_string.pop_back();
-    }
-
-    vector<string> splits;
-    char delimiter = ' ';
-
-    size_t i = 0;
-    size_t pos = input_string.find(delimiter);
-
-    while (pos != string::npos) {
-        splits.push_back(input_string.substr(i, pos - i));
-
-        i = pos + 1;
-        pos = input_string.find(delimiter, i);
-    }
-
-    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
-
-    return splits;
+    return 0;
 }
